@@ -1,0 +1,16 @@
+---
+title: "Statistics from Ant Wiki"
+---
+
+```{r}
+dttm <- Sys.Date()
+```
+
+
+Last updated on `r dttm`.
+
+---
+
+This website contain statistics obtained from [AntWiki](https://antwiki.org/wiki/Welcome_to_AntWiki).
+
+For questions, please contact us [via email](contact.qmd).
