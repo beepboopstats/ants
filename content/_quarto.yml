@@ -20,11 +20,12 @@ website:
   navbar:
     search: true
     left:
-      - text: "AntWiki"
-        file: index.qmd
-      # ###-###-###-###-###-###-###-###-###-###-###-###-
       - text: "Ant data in SRA database"
-        file: sra_ants.qmd
+        file: index.qmd
+      - text: "AntWiki"
+        file: antwiki.qmd
+      
+      # ###-###-###-###-###-###-###-###-###-###-###-###-
       # - text: "Jammer Stats"
       #   file: statsbook/jammer1.qmd
       # - text: "Blocker Stats"
