@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Statistics from Ant Wiki",
     "section": "",
-    "text": "Last updated on 2024-07-13.\n\nThis website contain statistics obtained from AntWiki.\nFor questions, please contact us via email."
+    "text": "Last updated on 2024-07-13.\n\nThis website contain statistics obtained from AntWiki.\nFor questions, please contact us via email.\n\n\n\nDownloading data for:  Pogonomyrmex...Done \nDownloading data for:  Camponotus...Done \n\n\n# A tibble: 1 × 2\n  data_found number_of_genus\n  &lt;chr&gt;                &lt;int&gt;\n1 TRUE                     2\n\n\n# A tibble: 2 × 3\n  foraging_stratum                   foraging_behaviour     n\n  &lt;chr&gt;                              &lt;chr&gt;              &lt;int&gt;\n1 subterranean/leaf litter           cooperative            1\n2 subterranean/leaf litter; arboreal cooperative            1"
   },
   {
     "objectID": "contact.html",
