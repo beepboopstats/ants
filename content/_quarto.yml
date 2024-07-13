@@ -48,7 +48,7 @@ website:
 
 format:
   html:
-    theme: pulse
+    theme: sandstone
     page-layout: full
     toc: true
     toc-depth: 4
