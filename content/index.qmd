@@ -14,3 +14,322 @@ Last updated on `r dttm`.
 This website contain statistics obtained from [AntWiki](https://antwiki.org/wiki/Welcome_to_AntWiki).
 
 For questions, please contact us [via email](contact.qmd).
+
+
+___
+
+```{r}
+library(dplyr)
+
+names <- c(
+  "Pogonomyrmex",
+  # "Pogonomyrmex_barbatus",
+  "Camponotus"
+  # "Camponotus_floridanus"
+)
+
+# names <- c(
+#   "Acamatus
+#   Acanthognathus
+#   Acanthomyops
+#   Acanthosticus
+#   Acromyrmex
+#   Adetomyrma
+#   Aenictus
+#   Amblyopone
+#   Amblyteles
+#   Amblyopone
+#   Anergates
+#   Anochetus
+#   Anonychomyrma
+#   Aphaenogaster
+#   Asphinctanilloides
+#   Atta
+#   Azteca
+#   Brachymyrmex
+#   Bothriomyrmex
+#   Camponotus
+#   Cardiocondyla
+#   Carebara
+#   Cerapachys
+#   Chelaner
+#   Cheliomyrmex
+#   Colobopsis
+#   Crematogaster
+#   Cryptocerus
+#   Cyphomyrmex
+#   Daceton
+#   Diacamma
+#   Dinoponera
+#   Diplomorium
+#   Discothyrea
+#   Dolichoderus
+#   Doleromyrma
+#   Donisthorpea
+#   Dorymyrmex
+#   Dorylus
+#   Eciton
+#   Ectatomma
+#   Ephebomyrmex
+#   Epoecus
+#   Epipheidole
+#   Erebomyrma
+#   Euponera
+#   Forelius
+#   Formica
+#   Formicoxenus
+#   Gigantiops
+#   Harpagoxenus
+#   Harpegnathus
+#   Heteroponera
+#   Holcoponera
+#   Huberia
+#   Hypoclinea
+#   Hypoponera
+#   Ichnomyrmex
+#   Iridomyrmex
+#   Janetia
+#   Lasius
+#   Leptanilloides
+#   Leptogenys
+#   Leptomyrmex
+#   Leptothorax
+#   Linepithema
+#   Liometopum
+#   Lobopelta
+#   Macromischa
+#   Manica
+#   Mayriella
+#   Megaponera
+#   Melophorus
+#   Messor
+#   Monomorium
+#   Myrmecia
+#   Myrmecina
+#   Myrmecocystus
+#   Myrmelachista
+#   Myrmica
+#   Mystrium
+#   Neivamyrmex
+#   Neoponera
+#   Ochetellus
+#   Odontomachus
+#   Oecophylla
+#   Orectognathus
+#   Pachycondyla
+#   Paraponera
+#   Parasyscia
+#   Paratrechina
+#   Peronomyrmex
+#   Pheidole
+#   Pheidologeton
+#   Pismire
+#   Plagiolepis
+#   Platythyrea
+#   Pogonomyrmex
+#   Polyergus
+#   Ponera
+#   Prenolepis
+#   Probolomyrmex
+#   Proceratium
+#   Prolasius
+#   Pseudomyrma
+#   Pseudomyrmex
+#   Pyramica
+#   Quartina
+#   Rhytidoponera
+#   Rogeria
+#   Solenopsis
+#   Stenamma
+#   Stigmatomma
+#   Streblognathus
+#   Strongylognathus
+#   Strumigenys
+#   Sympheidole
+#   Sysphincta
+#   Tapinoma
+#   Technomyrmex
+#   Temnothorax
+#   Tetramorium
+#   Tetraogmus
+#   Typhlomyrmex
+#   Tyrannomyrmex
+#   Vollenhovia
+#   Wheeleriella
+#   Wasmannia
+#   Xenomyrmex
+#   Xiphomyrmex"
+# ) |> 
+#   purrr::map(
+#     ~ .x |> 
+#       stringr::str_split("\\n") |> 
+#       unlist() |> 
+#       stringr::str_trim()
+#   ) |> 
+#   unlist()
+
+list_text <- list()
+list_df <- list()
+
+for(i in 1:length(names)) {
+  ###-###-###-###-###-###-
+  Sys.sleep(5)
+  ###-###-###-###-###-###-
+  name <- names[i]
+  cat("Downloading data for: ", name)
+  
+  html <- xml2::read_html(
+    glue::glue(
+      "https://antwiki.org/wiki/index.php?title={name}&action=edit" 
+    )
+  )
+  
+  list_text[[i]] <- html |> 
+    # rvest::html_element("head")
+    rvest::html_elements("textarea") |> 
+    rvest::html_text2()
+  
+  # Split text into sections
+  sections <- stringr::str_split(
+    list_text[[i]], "===|=="
+  ) |> 
+    unlist()
+  
+  # # Print the sections
+  # for (i in 1:length(sections)) {
+  #   cat("Section", i, ":", sections[i], "\n\n")
+  # }  
+  
+  lifehistory <- sections |> 
+    stringr::str_detect(
+      "Life History Traits"
+    )
+  
+  
+  index_lifehistory <- which(lifehistory == TRUE) + 1
+  
+  if(length(index_lifehistory) == 0) {
+    list_df[[i]] <- tibble(
+      name = name,
+      trait = NA,
+      value = NA
+    )
+  } else {
+    text2 <- sections[index_lifehistory] |> 
+      stringr::str_trim()
+    # Extracting key-value pairs
+    key_value_pairs <- stringr::str_match_all(text2, "\\|([^=]+)=([^|]+)")
+    # Creating a tibble
+    list_df[[i]] <- tibble(
+      trait = key_value_pairs[[1]][,2],
+      value = key_value_pairs[[1]][,3]
+    ) |> 
+      mutate(
+        value = stringr::str_remove_all(value, "\\{|\\}|\\<|\\>|\\!|\\--")
+      ) |>
+      mutate(
+        name = name,
+        .before = trait
+      )
+  }
+  
+  cat("...Done", "\n")
+  
+}
+
+# combine data ------------------------------------------------------------
+
+lifehistory <- do.call(
+  rbind,
+  list_df
+) |> 
+  mutate(
+    value = if_else(
+      value %in% c("", " "),
+      NA,
+      value
+    )
+  ) |> 
+  rename(
+    genus = name
+  ) |> 
+  group_by(
+    genus
+  ) |> 
+  mutate(
+    data_found = if_else(
+      max(row_number()) == 1,
+      FALSE,
+      TRUE
+    )
+  ) |> 
+  ungroup() |> 
+  mutate_all(
+    stringr::str_trim
+  )
+
+# Summary ----
+lifehistory |>
+  select(
+    genus, data_found
+  ) |> 
+  distinct() |> 
+  count(data_found, name = "number_of_genus")
+
+lifehistory |> 
+  select(- data_found) |> 
+  filter(
+    trait %in% c(
+      "foraging_stratum",
+      "mean_colony_size",
+      "foraging_behaviour",
+      "activity_time"
+    )
+  ) |> 
+  distinct() |> 
+  tidyr::pivot_wider(
+    names_from = trait,
+    values_from = value
+  ) |> 
+  # glimpse() |> 
+  group_by(
+    foraging_stratum,
+    foraging_behaviour
+  ) |> 
+  tally() |> 
+  ungroup()
+
+compare_genus <- function(data, genus1, genus2) {
+  # ## DEV ----
+  # genus1 = "Pogonomyrmex"
+  # genus2 = "Camponotus"
+  
+  lifehistory |> 
+    filter(
+      genus %in% c(genus1, genus2)
+    ) |> 
+    select(
+      -data_found
+    ) |> 
+    distinct() |> 
+    tidyr::pivot_wider(
+      names_from = genus,
+      values_from = value
+    )
+}
+
+lifehistory |> 
+  compare_genus(
+    genus1 = "Pogonomyrmex",
+    genus2 = "Camponotus"
+  ) |> 
+  mutate(
+    same = if_else(
+      Pogonomyrmex == Camponotus,
+      TRUE,
+      FALSE
+    )
+  ) |> 
+  DT::datatable()
+```
+
