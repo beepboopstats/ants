@@ -268,36 +268,36 @@ lifehistory <- do.call(
     stringr::str_trim
   )
 
-# Summary ----
-lifehistory |>
-  select(
-    genus, data_found
-  ) |> 
-  distinct() |> 
-  count(data_found, name = "number_of_genus")
+# # Summary ----
+# lifehistory |>
+#   select(
+#     genus, data_found
+#   ) |> 
+#   distinct() |> 
+#   count(data_found, name = "number_of_genus")
 
-lifehistory |> 
-  select(- data_found) |> 
-  filter(
-    trait %in% c(
-      "foraging_stratum",
-      "mean_colony_size",
-      "foraging_behaviour",
-      "activity_time"
-    )
-  ) |> 
-  distinct() |> 
-  tidyr::pivot_wider(
-    names_from = trait,
-    values_from = value
-  ) |> 
-  # glimpse() |> 
-  group_by(
-    foraging_stratum,
-    foraging_behaviour
-  ) |> 
-  tally() |> 
-  ungroup()
+# lifehistory |> 
+#   select(- data_found) |> 
+#   filter(
+#     trait %in% c(
+#       "foraging_stratum",
+#       "mean_colony_size",
+#       "foraging_behaviour",
+#       "activity_time"
+#     )
+#   ) |> 
+#   distinct() |> 
+#   tidyr::pivot_wider(
+#     names_from = trait,
+#     values_from = value
+#   ) |> 
+#   # glimpse() |> 
+#   group_by(
+#     foraging_stratum,
+#     foraging_behaviour
+#   ) |> 
+#   tally() |> 
+#   ungroup()
 
 compare_genus <- function(data, genus1, genus2) {
   # ## DEV ----
