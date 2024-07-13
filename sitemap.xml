@@ -2,10 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://biplabendu.github.io/antwiki_data_download/index.html</loc>
-    <lastmod>2024-07-13T05:05:45.947Z</lastmod>
+    <lastmod>2024-07-13T05:57:04.873Z</lastmod>
+  </url>
+  <url>
+    <loc>https://biplabendu.github.io/antwiki_data_download/sra_ants.html</loc>
+    <lastmod>2024-07-13T05:57:04.873Z</lastmod>
   </url>
   <url>
     <loc>https://biplabendu.github.io/antwiki_data_download/contact.html</loc>
-    <lastmod>2024-07-13T05:05:45.947Z</lastmod>
+    <lastmod>2024-07-13T05:57:04.873Z</lastmod>
   </url>
 </urlset>
