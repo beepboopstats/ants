@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://biplabendu.github.io/ants/index.html</loc>
-    <lastmod>2025-02-26T06:46:16.665Z</lastmod>
-  </url>
-  <url>
     <loc>https://biplabendu.github.io/ants/contact.html</loc>
-    <lastmod>2025-02-26T06:46:16.664Z</lastmod>
+    <lastmod>2025-02-28T06:46:18.805Z</lastmod>
   </url>
   <url>
     <loc>https://biplabendu.github.io/ants/antwiki.html</loc>
-    <lastmod>2025-02-26T06:46:16.664Z</lastmod>
+    <lastmod>2025-02-28T06:46:18.805Z</lastmod>
+  </url>
+  <url>
+    <loc>https://biplabendu.github.io/ants/index.html</loc>
+    <lastmod>2025-02-28T06:46:18.805Z</lastmod>
   </url>
 </urlset>
